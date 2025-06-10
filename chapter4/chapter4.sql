@@ -9,7 +9,7 @@ CREATE ROLE luca WITH LOGIN PASSWORD '123' VALID UNTIL '2025-12-25';
 CREATE ROLE book_authors WITH NOLOGIN;
 
 # Asignar un role
-GRANT ROLE book_authors TO luca;
+GRANT book_authors TO luca;
 
 # admin members
 CREATE ROLE book_reviewers WITH NOLOGIN ADMIN luca;
@@ -64,4 +64,32 @@ rolpassword = SCRAM-SHA-256$…: contraseña registrada en formato SCRAM.
 # $EDITOR /etc/postgresql/16/main/pg_hba.conf
 # 2. Recargar la configuración
 # sudo -u postgres pg_ctl reload -D $PGDATA
+
+
+/*
+tipo	Cómo llega la conexión:
+• local → socket UNIX (sin TCP/IP)
+• host → TCP/IP sin SSL
+• hostssl → TCP/IP con SSL
+
+base_de_datos	A qué bases aplica la línea:
+• nombre de una base específica
+• all para todas
+• también hay sameuser, samerole…
+
+rol	Qué rol (usuario) debe usar:
+• nombre de rol
+• all para cualquier rol
+
+origen	Desde dónde se conecta:
+• IP o rango CIDR (192.168.1.0/24)
+• hostname
+• all, samehost, samenet
+
+método_autenticación	Cómo se verifica la identidad:
+• scram-sha-256, md5 → piden contraseña
+• trust → permite sin contraseña (sólo testing)
+• reject → siempre rechaza
+
+*/
 

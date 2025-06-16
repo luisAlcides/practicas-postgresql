@@ -78,7 +78,6 @@ COMMIT;
 SELECT COUNT(*) FROM temp_numbers;
 
 -- Ejercicio avanzado: loop en psql
-
 \set start 1
 \set end 3
 \echo '== Iteración 1: insertar de :start a :end =='
@@ -90,3 +89,25 @@ BEGIN;
 COMMIT;
 SELECT COUNT(*) AS after_commit FROM temp_numbers;
 
+-- actualiza rangos
+\set start 4
+\set end 6
+
+\echo '== Iteración 2: insertar de :start a :end =='
+BEGIN;
+  INSERT INTO temp_numbers
+    SELECT n FROM numbers WHERE n BETWEEN :start AND :end;
+  SELECT COUNT(*) FROM temp_numbers;
+COMMIT;
+SELECT COUNT(*)
+
+
+-- unlogged TABLE
+CREATE UNLOGGED TABLE unlogged_users (
+pk INT GENERATED ALWAYS AS IDENTITY,
+username TEXT NOT NULL,
+gecos TEXT,
+email TEXT NOT NULL,
+PRIMARY KEY (pk),
+UNIQUE (username)
+)
